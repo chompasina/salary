@@ -1,4 +1,9 @@
-class User::JobsController < ApplicationController
+class User::JobsController < User::BaseController
+
+  def new
+    @user = current_user
+    @job = Job.new
+  end
 
   def index
     @jobs = Job.all
@@ -8,11 +13,10 @@ class User::JobsController < ApplicationController
     @job = Job.find(params[:id])
   end
 
-  def new
-    @job = Job.new
-  end
 
   def create
+    @user = current_user
+    user_job = UserJob.new(job_id: params[:job_id], user_id: current_user.id)
     @job = Job.new(job_params)
     if @job.save
       flash[:notice] = "#{@job.job_title} was created!"
@@ -46,7 +50,7 @@ class User::JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:name, :quantity, :price)
+    params.require(:job).permit(:current_job, :job_title, :company, :city, :state, :salary, :start_date, :end_date)
     #allows this info to come through with name, quantity, and price, only with job params. that's all we'll accept in our html.
   end
 end

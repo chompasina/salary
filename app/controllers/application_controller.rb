@@ -12,11 +12,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user?
-    current_user
+    @current_user
   end
-  
+
   def current_admin?
-    current_user && curent_user.admin?
+    @current_user && @curent_user.admin?
   end
 
 private

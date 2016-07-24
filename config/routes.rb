@@ -8,12 +8,13 @@ Rails.application.routes.draw do
 
   resources :users,  only: [:index, :new, :show, :create]
 
+  namespace :admin do
+    resources :stats, :users, :jobs
+  end
   # resources :jobs
 
-  namespace :admin do
-    resources :stats
-  end
-
+  get '/admin', to: "admin#show"
+  get '/admin/login', to: "sessions#new"
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'

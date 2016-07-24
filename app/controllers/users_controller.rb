@@ -25,6 +25,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+    if @user.update(user_params)
+      flash[:notice] = "Profile Updated"
+      redirect_to current_user
+    else
+      flash[:error] = @user.errors.full_messages.join(", ")
+      render :edit
+    end
+end
+
   private
 
   def user_params

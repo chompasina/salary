@@ -6,9 +6,11 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by(username: params[:session][:username])
-
-    # @ = .new(params)
-    if @user && @user.authenticate(params[:session][:password])
+    if @user.current_admin? && @user && @user.authenticate(params[:session][:password])
+      flash[:notice] = "Hi, #{@user.username}. You are now logged in."
+      session[:user_id] = @user.id
+      redirect_to admin_path
+    elsif @user && @user.authenticate(params[:session][:password])
       session[:user_id] = @user.id
       flash[:notice] = "Logged In Successfully"
       redirect_to user_path(@user)
@@ -17,6 +19,10 @@ class SessionsController < ApplicationController
       render :new
     end
   end
+
+  # def current_admin?
+  #   current_user && curent_user.admin?
+  # end
 
 
   def destroy

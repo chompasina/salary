@@ -1,6 +1,6 @@
-<h1 id=greeting><%="Welcome, #{current_user.username}!"%></h1>
+<h1 id=greeting>Welcome,<%=current_user.username%></h1>
 
-<h2>Your Job Information</h2>
+<h2>Your Shared Jobs</h2>
 
     <%= current_user.jobs.map do |tool| %>
       <%= link_to job.name, user_job_path(job) %>

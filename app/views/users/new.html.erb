@@ -1,0 +1,13 @@
+<h1>Enter your information to create an account in the Turing Salary Share:</h1>
+<%= form_for @user do |f| %>
+  <%= f.text_field :username, placeholder: "Username" %> <br>
+  <%= f.password_field :password, placeholder: "Password" %> <br>
+  <%= f.text_field :first_name, placeholder: "First Name" %><br>
+  <%= f.text_field :last_name, placeholder: "Last Name" %><br>
+  <%= f.email_field :email, placeholder: "Email Address" %><br>
+  <%= f.date_field :birthdate, placeholder: "Birthdate" %><br>
+  <%= f.text_field :cohort, placeholder: "Turing Cohort" %><br>
+  <%= f.submit 'Create Account' %>
+  <% end %>
+<br>
+<%= link_to "Already have an account? Login here", login_path %>

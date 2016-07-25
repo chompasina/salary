@@ -1,9 +1,13 @@
-<h2>Your Shared Jobs</h2>
-
-
-    <%= current_user.jobs.map do |tool| %>
-    <%= byebug %>
-      <%= link_to job.name, user_job_path(job) %>
-      <%= link_to job.name, edit_job_path %>
-    <% end %>
-<%= link_to "Add a job", new_job_path %>
+<div class="main">
+  <h2>Your Shared Jobs</h2>
+      <%= current_user.jobs.map do |job| %>
+        <h2><%= job.job_title %> at <%= job.company %> </h2>
+        <h3>Location: <%= job.city %>, <%= job.state %></h3>
+        <h3>Salary: $<%= job.salary %> a year</h3>
+        <h3>Started on: <%= job.start_date %></h3>
+        <h3>Ended on: <%= job.end_date %></h3>
+        <%= link_to "Edit this job", edit_job_path(job) %>
+      <% end %><br>
+      <br>
+  <%= link_to "Add a job", new_job_path %>
+</div>

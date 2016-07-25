@@ -1,8 +1,8 @@
-<h1>Please login to the Turing Salary Share:</h1>
-<%= form_for :session, url: login_path, id: "submit" do |f| %>
-
-<!--expecting url to be login_path, so need to add to routes file. why isn't this an active record object? b/c it's temporary and not stored so doesn't need to be tied directly to an active record object-->
-  <%= f.text_field :username, placeholder: "Username" %>
-  <%= f.password_field :password, placeholder: "Password"  %>
-  <%= f.submit 'Click to log in', id: "submit" %>
-<% end %>
+<div class="main">
+  <h1>Please login to the Turing Salary Share:</h1>
+    <%= form_for :session, url: login_path, id: "submit" do |f| %>
+      <%= f.text_field :username, placeholder: "Username" %>
+      <%= f.password_field :password, placeholder: "Password"  %>
+      <%= f.submit 'Click to log in', id: "submit", class: "button" %>
+    <% end %>
+</div>

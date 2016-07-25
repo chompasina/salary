@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :require_login, only: [:new, :create]
+  skip_before_action :require_login #, only: [:new, :create]
 
   def index
     @users = User.all
@@ -43,7 +43,10 @@ end
   private
 
   def user_params
-    params.require(:user).permit(:name,
+    params.require(:user).permit(:first_name,
+                                :last_name,
+                                :cohort,
+                                :birthdate,
                                 :email,
                                 :username,
                                 :password,

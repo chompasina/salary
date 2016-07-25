@@ -15,9 +15,7 @@ class User::JobsController < User::BaseController
 
 
   def create
-    @user = current_user
-    user_job = UserJob.new(job_id: params[:job_id], user_id: current_user.id)
-    @job = Job.new(job_params)
+      @job = current_user.jobs.create(job_params)
     if @job.save
       flash[:notice] = "#{@job.job_title} was created!"
       redirect_to jobs_path

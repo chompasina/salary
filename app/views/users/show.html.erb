@@ -1,9 +1,13 @@
-<h1 id=greeting>Welcome,<%=current_user.username%></h1>
+<div class="main">
 
-<h2>Your Shared Jobs</h2>
+  <h1 id=greeting>Welcome, <%=current_user.username%></h1>
 
-    <%= current_user.jobs.map do |tool| %>
-      <%= link_to job.name, user_job_path(job) %>
+  <h2>Your Shared Jobs</h2>
+
+    <%= current_user.jobs.map do |job| %>
+      <h3><%=link_to job.job_title, job_path(job) %> at <%= job.company %> </h3>
     <% end %>
 
-    <%= link_to "Add a job", new_job_path %>
+    <br>
+      <%= link_to "Add a job", new_job_path %>
+</div>

@@ -11,7 +11,7 @@
     <%= content_tag :div, msg, class: "flash_#{type}" %>
   <% end %>
 
-  <div>
+  <div class='login-header'>
     <% if @current_user %>
       <%= link_to "Logout", logout_path, method: :delete %>
     <% else %>

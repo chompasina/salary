@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160724005229) do
+ActiveRecord::Schema.define(version: 20160724031802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,10 +27,17 @@ ActiveRecord::Schema.define(version: 20160724005229) do
     t.date     "end_date"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "user_id"
   end
 
-  add_index "jobs", ["user_id"], name: "index_jobs_on_user_id", using: :btree
+  create_table "user_jobs", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "job_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_jobs", ["job_id"], name: "index_user_jobs_on_job_id", using: :btree
+  add_index "user_jobs", ["user_id"], name: "index_user_jobs_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.date    "birthdate"
@@ -38,11 +45,12 @@ ActiveRecord::Schema.define(version: 20160724005229) do
     t.string  "password_digest"
     t.string  "email"
     t.integer "turing_class"
-    t.integer "role",            default: 0
+    t.boolean "admin",           default: false
     t.string  "first_name"
     t.string  "last_name"
     t.integer "cohort"
   end
 
-  add_foreign_key "jobs", "users"
+  add_foreign_key "user_jobs", "jobs"
+  add_foreign_key "user_jobs", "users"
 end

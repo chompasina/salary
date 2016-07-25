@@ -1,15 +1,7 @@
-<h1>What jobs have you had since Turing?</h1>
+<div class="main">
+  <h1>What jobs have you had since Turing?</h1>
 
-<%= form_for @job do |f| %>
-<%= f.check_box :current_job, placeholder: "Current Job" %> <br>
-<%= f.text_field :job_title, placeholder: "Job Title" %> <br>
-<%= f.text_field :company, placeholder: "Company" %> <br>
-<%= f.text_field :city, placeholder: "City" %> <br>
-<%= f.text_field :state, placeholder: "State" %> <br>
-<%= f.text_field :salary, placeholder: "Yearly Salary" %> <br>
-<%= f.date_field :start_date, placeholder: "Start Date" %> <br>
-<%= f.text_field :end_date, placeholder: "End Date" %> <br>
-<%= f.submit "Add this job" %>
-<% end %>
+    <%= render "form" %>
 
-<%= link_to "Add a past job", new_job_path %>
+    <%= link_to "Add a past job", new_job_path %>
+</div>

@@ -1,14 +1,16 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_login, only: [:new, :create]
+  skip_before_action :require_login #, only: [:new, :create]
 
   def new
   end
 
   def create
     @user = User.find_by(username: params[:session][:username])
-
-    # @ = .new(params)
-    if @user && @user.authenticate(params[:session][:password])
+    if @user && @user.admin? && @user.authenticate(params[:session][:password])
+      flash[:notice] = "Hi, #{@user.username}. You are now logged in."
+      session[:user_id] = @user.id
+      redirect_to admin_path
+    elsif @user && @user.authenticate(params[:session][:password])
       session[:user_id] = @user.id
       flash[:notice] = "Logged In Successfully"
       redirect_to user_path(@user)
@@ -17,7 +19,6 @@ class SessionsController < ApplicationController
       render :new
     end
   end
-
 
   def destroy
     session.clear

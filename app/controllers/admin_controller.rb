@@ -2,9 +2,9 @@ class AdminController < ApplicationController
 
   def show
     if @current_user.admin?
-      @current_user
+      redirect_to admin_path
     else
       redirect_to login_path
-    end
+    end 
   end
 end

@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
-  skip_before_action :require_login #, only: [:new, :create]
+  skip_before_action :require_login, only: [:show, :edit]
 
   def index
     @users = User.all
   end
 
   def show
-    @user = current_user #User.find(params[:id]) - switched after making current user in app controller
+    @user = current_user 
   end
 
   def new

@@ -1,0 +1,10 @@
+<h1>Admin page</h1>
+
+<ol>
+ 
+<% @users.each do |user| %>
+  if <% user.jobs.current_job == true %>
+  <%= user.username %> - <%= user.jobs.company %> - <%= user.jobs.city %>, <%=user.jobs.state %> - <%= user.jobs.salary %>
+<% end %>
+</ol>
+

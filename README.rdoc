@@ -1,28 +1,16 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Turing graduates are now living across the world working as computer programmers and web developers. 
+Many of us current students wish to learn more about past students.
+Specifically, we are interested to know about how they found these illustrious jobs, what salaries they have been offered, and where they are living now. 
 
-Things you may want to cover:
+This app is a work-in-progress but eventually will use GitHub OAuth to verify Turing students. 
 
-* Ruby version
+Phase 1: COMPLETE
+- app has users 
+- app has admins
+- users can create jobs, and update or edit past jobs
+- admins can see all user jobs
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Phase 2: 
+- add GitHub OAuth 

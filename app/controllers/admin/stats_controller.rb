@@ -1,3 +1,3 @@
-class StatsController < Admin::BaseController
+class Admin::StatsController < Admin::BaseController
 
 end

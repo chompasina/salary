@@ -3,7 +3,7 @@
 <ol>
  
 <% @users.each do |user| %>
-  if <% user.jobs.current_job == true %>
+  if <% user.jobs.current_job %>
   <%= user.username %> - <%= user.jobs.company %> - <%= user.jobs.city %>, <%=user.jobs.state %> - <%= user.jobs.salary %>
 <% end %>
 </ol>

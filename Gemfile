@@ -28,6 +28,8 @@ gem 'launchy'
 # gem 'capybara'
 gem "minitest-rails"
 gem 'mocha'
+gem 'slack-api'
+gem 'figaro'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

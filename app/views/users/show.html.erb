@@ -4,7 +4,7 @@
 
   <h2>Your Shared Jobs</h2>
 
-    <%= current_user.jobs.map do |job| %>
+    <% current_user.jobs.map do |job| %>
       <h3><%=link_to job.job_title, job_path(job) %> at <%= job.company %> </h3>
     <% end %>
 

@@ -1,5 +1,9 @@
 <%= form_for @job do |f| %>
-  <%= f.check_box :current_job, placeholder: "Current Job" %> <br>
+  <%= f.label :current_job do %> <br>
+  Current Job? 
+    <%= f.check_box :current_job, :class => "checkbox-inline"  %> <br>
+    <% end %>
+    
   <%= f.text_field :job_title, placeholder: "Job Title" %> <br>
   <%= f.text_field :company, placeholder: "Company" %> <br>
   <%= f.text_field :city, placeholder: "City" %> <br>

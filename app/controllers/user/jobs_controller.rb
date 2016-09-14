@@ -17,6 +17,7 @@ class User::JobsController < User::BaseController
   def create
       @job = current_user.jobs.create(job_params)
     if @job.save
+      SlackClientService.new.post_job_info(@job.job_title, @job.salary)
       flash[:notice] = "#{@job.job_title} was created!"
       redirect_to jobs_path
     else
@@ -49,6 +50,5 @@ class User::JobsController < User::BaseController
 
   def job_params
     params.require(:job).permit(:current_job, :job_title, :company, :city, :state, :salary, :start_date, :end_date)
-    #allows this info to come through with name, quantity, and price, only with job params. that's all we'll accept in our html.
   end
 end

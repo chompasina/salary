@@ -6,7 +6,6 @@ class CreateUser < ActiveRecord::Migration
       t.string :password_digest
       t.string :email
       t.string :name
-      t.integer :turing_class
     end
   end
 end

@@ -75,3 +75,13 @@ input {
 .button:hover {
   background-color: turquoise;
 }
+
+.checkbox-inline {
+  margin-bottom: 30px;
+  bottom: 30px;
+}
+
+#job_current_job {
+  left: 0;
+}
+

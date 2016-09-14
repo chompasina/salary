@@ -16,3 +16,9 @@ coverage
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore vcr cassettes
+/spec/vcr_cassettes
+
+# Simple Cov
+coverage

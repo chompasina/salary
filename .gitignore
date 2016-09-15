@@ -22,3 +22,6 @@ coverage
 
 # Simple Cov
 coverage
+
+# Ignore CSV data
+db/csv

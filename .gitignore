@@ -25,3 +25,6 @@ coverage
 
 # Ignore CSV data
 db/csv
+
+# Ignore public assets folder 
+public/assets

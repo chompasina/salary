@@ -20,6 +20,6 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   
   get '/slack', to: 'slack#handle'
-  post '/slack', to: 'slack#handle'
+  post '/slack', to: 'slack#index'
 end
   

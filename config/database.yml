@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: salary_production
-  username: salary
-  password: <%= ENV['SALARY_DATABASE_PASSWORD'] %>
+  # username: salary
+  # password: <%= ENV['SALARY_DATABASE_PASSWORD'] %>

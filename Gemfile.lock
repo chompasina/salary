@@ -260,8 +260,10 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   database_cleaner
   email_validator
+  eventmachine
   factory_girl_rails (~> 4.0)
   faraday
+  faye-websocket
   figaro
   jbuilder (~> 2.5)
   jquery-rails

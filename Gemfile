@@ -18,6 +18,8 @@ gem 'unicorn'
 gem 'faraday'
 gem 'email_validator', require: 'email_validator/strict'
 gem 'simplecov', require: false
+gem 'faye-websocket'
+gem 'eventmachine'
 
 group :development, :test do
   gem 'launchy'

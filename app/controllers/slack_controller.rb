@@ -1,15 +1,20 @@
 class SlackController < ApplicationController
   skip_before_action :verify_authenticity_token
   
-  def handle 
-    raw_response = Faraday.get("https://slack.com/api/rtm.start", params: {
-      token: ENV['slack_token']
-      })
-    parsed_response = JSON.pretty_generate(JSON.parse(raw_response.body))
-    puts parsed_response['url']
-  end
+  # def handle 
+  #   raw_response = Faraday.get("https://slack.com/api/rtm.start", params: {
+  #     token: ENV['slack_token']
+  #     })
+  #   parsed_response = JSON.pretty_generate(JSON.parse(raw_response.body))
+  #   puts parsed_response['url']
+  # end
   
   def index
+  
+    require "pry"; binding.pry
+    # render json: {
+    #   "text": "Thanks for sharing your job information!"
+    # }
     render json: {
       "text": "Would you like to view alumni job stats or add your job anonymously?",
       "attachments": [

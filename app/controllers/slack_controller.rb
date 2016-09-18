@@ -1,58 +1,33 @@
 class SlackController < ApplicationController
   skip_before_action :verify_authenticity_token
   
-  # def handle 
+  # def create
+  #   return render json: {}, status: 403 unless valid_slack_token?
+  #   CommandWorker.perform_async(command_params.to_h)
+  #   render json: { response_type: "ephemeral"}, status: :created
+  # end
+    
+  
+  def handle 
+    require "pry"; binding.pry
   #   raw_response = Faraday.get("https://slack.com/api/rtm.start", params: {
   #     token: ENV['slack_token']
   #     })
   #   parsed_response = JSON.pretty_generate(JSON.parse(raw_response.body))
   #   puts parsed_response['url']
-  # end
-  
-  def index
-  
-    require "pry"; binding.pry
-    # render json: {
-    #   "text": "Thanks for sharing your job information!"
-    # }
-    render json: {
-      "text": "Would you like to view alumni job stats or add your job anonymously?",
-      "attachments": [
-        {
-          "text": "Choose one:",
-          "fallback": "You are unable to view this",
-          "callback_id": "job_stats",
-          "color": "#3AA3E3",
-          "attachment_type": "default",
-          "actions": [
-            {
-              "name": "job_stats",
-              "text": "Job Stats",
-              "type": "button",
-              "value": "stats"
-            },
-            {
-              "name": "add_a_job",
-              "text": "Add a Job",
-              "type": "button",
-              "value": "add_job",
-              "confirm": {
-                "title": "Added a job before?",
-                "text": "Have you added a job before? If not, please register here first.",
-                "ok_text": "Yes",
-                "dismiss_text": "No"
-              }
-            }
-          ]
-        }
-      ]
-    }
-    # render text: "I heard you"
   end
+  
+  
   
   private 
   
   def parse(response)
     JSON.parse(response.body, symbolize_names: true)
   end
+  
+  def valid_slack_token?
+    params[:token] == ENV["SLACK_SLASH_COMMAND_TOKEN"]
+  end
+  
+
 end

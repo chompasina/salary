@@ -129,6 +129,8 @@ GEM
     libv8 (3.16.14.15)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
+    madison (0.5.0)
+      json
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     metaclass (0.0.4)
@@ -298,14 +300,13 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   database_cleaner
   email_validator
-  eventmachine
   factory_girl_rails (~> 4.0)
   faraday
-  faye-websocket
   figaro
   jbuilder (~> 2.5)
   jquery-rails
   launchy
+  madison
   mocha
   pg (~> 0.18)
   pry-rails

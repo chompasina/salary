@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160724031802) do
+ActiveRecord::Schema.define(version: 20160918223829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "citext"
 
   create_table "jobs", force: :cascade do |t|
     t.string   "job_title"
@@ -43,8 +44,8 @@ ActiveRecord::Schema.define(version: 20160724031802) do
     t.string  "password_digest"
     t.string  "email"
     t.boolean "admin",           default: false
-    t.string  "first_name"
-    t.string  "last_name"
+    t.citext  "first_name"
+    t.citext  "last_name"
     t.integer "cohort"
   end
 

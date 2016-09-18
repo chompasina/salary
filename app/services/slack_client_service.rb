@@ -12,7 +12,7 @@ class SlackClientService
   end
 
   def post_job_info(title, salary)
-    client.chat_postMessage(channel: "#general", text: "A Turing alum just posted a new job as a #{title} making #{salary}.", icon_emoji: ":monkey_face:")
+    client.chat_postMessage(channel: "#practice-jobs", text: "A Turing alum just posted a new job as a #{title} making #{salary}.", icon_emoji: ":monkey_face:")
   end
   
   private

@@ -18,10 +18,11 @@ gem 'unicorn'
 gem 'faraday'
 gem 'email_validator', require: 'email_validator/strict'
 gem 'simplecov', require: false
-gem 'faye-websocket'
-gem 'eventmachine'
+# gem 'faye-websocket'
+# gem 'eventmachine'
 gem 'slack-ruby-bot'
 gem 'celluloid-io'
+gem 'madison'
 
 group :development, :test do
   gem 'launchy'

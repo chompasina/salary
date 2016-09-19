@@ -4,15 +4,22 @@ class JobsService
   attr_reader :job_data
   
   def self.create_from_slack(params)
-    @job_data = params["text"].split(";")
-    name = @job_data[0]
+    job_data = params["text"].split(";")
+    name = job_data[0]
     first = name.split(" ").first
     last = name.split(" ").last
     slack_user = User.where(first_name: first, last_name: last)
     if slack_user.count == 0 
-      render text: "Cannot find that user"
+      nil
     else
-      slack_user
+      {
+        user: slack_user.first,
+        job_title: job_data[1].downcase,
+        company: job_data[2].capitalize,
+        city: job_data[3].capitalize, 
+        state: job_data[4].capitalize,
+        salary: job_data[5]    
+      }
     end
   end
   

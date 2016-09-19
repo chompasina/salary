@@ -3,9 +3,13 @@ class Slack::JobsController < ApplicationController
   
   def create
     @user_data = JobsService.create_from_slack(command_params)
-    require "pry"; binding.pry
-    @job = Job.new(job_title: @job_data.job_title, city: @job_data.city, state: @job_data.state, salary: @job_data.salary)
-    if Job.save
+    # require "pry"; binding.pry
+    @job = Job.new(job_title: @user_data[:job_title], 
+                   city: @user_data[:city], 
+                   state: @user_data[:state], 
+                   salary: @user_data[:salary],
+                   user: @user_data[:user])
+    if @job.save
       render json: {
         text: "Thanks for sharing your data"
         } 

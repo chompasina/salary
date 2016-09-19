@@ -28,5 +28,6 @@ Rails.application.routes.draw do
   
   # post '/slack', to: 'slack#create'
   # post '/slack_buttons', to: 'slack#buttons'
+
 end
   

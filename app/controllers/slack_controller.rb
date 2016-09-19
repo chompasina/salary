@@ -28,6 +28,4 @@ class SlackController < ApplicationController
   def valid_slack_token?
     params[:token] == ENV["SLACK_SLASH_COMMAND_TOKEN"]
   end
-  
-
 end

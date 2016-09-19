@@ -17,9 +17,16 @@ gem 'figaro'
 gem 'unicorn'
 gem 'faraday'
 gem 'email_validator', require: 'email_validator/strict'
-gem 'simplecov', require: false
+# gem 'faye-websocket'
+# gem 'eventmachine'
+# gem 'slack-ruby-bot'
+# gem 'celluloid-io'
+gem 'madison'
+gem 'omniauth'
+gem 'omniauth-slack'
 
 group :development, :test do
+  gem 'simplecov', require: false
   gem 'launchy'
   gem 'capybara'
   gem 'shoulda-matchers'

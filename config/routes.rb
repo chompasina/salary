@@ -20,6 +20,14 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   
   get '/slack', to: 'slack#handle'
-  post '/slack', to: 'slack#handle'
+  get '/auth/:provider/callback', to: 'sessions#create'
+  
+  namespace :slack do
+    resources :jobs, only: [:create]
+  end
+  
+  # post '/slack', to: 'slack#create'
+  # post '/slack_buttons', to: 'slack#buttons'
+
 end
   

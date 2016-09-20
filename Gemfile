@@ -24,6 +24,7 @@ gem 'email_validator', require: 'email_validator/strict'
 gem 'madison'
 gem 'omniauth'
 gem 'omniauth-slack'
+gem 'responders'
 
 group :development, :test do
   gem 'simplecov', require: false

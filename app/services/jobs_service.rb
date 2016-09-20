@@ -5,6 +5,7 @@ class JobsService
   
   def self.create_from_slack(params)
     job_data = params["text"].split(";")
+    require "pry"; binding.pry
     name = job_data[0]
     first = name.split(" ").first
     last = name.split(" ").last

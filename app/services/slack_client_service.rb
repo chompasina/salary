@@ -1,9 +1,11 @@
 require 'slack'
 
 class SlackClientService
-  attr_reader :client
+  attr_reader :client,
+              :input
 
-  def initialize
+  def initialize(input)
+    @input = input
     @client = Slack::Client.new(token: ENV['app_access_token'])
     # @conn = Faraday.post("https://hooks.slack.com/services/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") do |faraday|
     # # @_conn = Faraday.new("https://api.github.com/rtm.start") do |faraday|
@@ -17,14 +19,23 @@ class SlackClientService
     client.chat_postMessage(channel: "#practice-jobs", text: "A Turing alum just posted a new job as a #{title} making #{salary}.", icon_emoji: ":monkey_face:")
   end
   
-  def confirm_name(name, channel)
+  def confirm_name
+    name = input["text"]
+    channel = input["channel"]
+
     client2 = Slack::Client.new(token: ENV['bot_access_token'])
-    JobInfoHandler.new(name).check_user?
-    response = client2.chat_postMessage(
+    if JobInfoHandler.new(name).check_user?
+      response = client2.chat_postMessage(
                        channel: channel, 
                        text: "Hi #{name}! So, you want to add a job? What's your job title?"
                        )
+    else
+      response = client2.chat_postMessage(
+                       channel: channel, 
+                       text: "We weren't able to find your name in our list. Please try again or email Turing staff to look into this issue."
+                       )
     # Rails.logger.debug(YAML.dump(response))                  
+    end
   end
   
   # private

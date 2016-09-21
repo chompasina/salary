@@ -8,8 +8,7 @@ class JobInfoHandler
   def check_user?
     first = input.split.first
     last = input.split.last
-    require "pry"; binding.pry
-    @user = User.find_by(first_name: first, last_name: last)
+    @user = User.find_by(first_name: first, last_name: last)      
   end
   
   def add_job

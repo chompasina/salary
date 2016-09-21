@@ -1,8 +1,10 @@
 class SlackController < ApplicationController
+  protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
+
   rescue_from Exception, with: :text_error_handler
   skip_before_action :verify_authenticity_token
   before_action :verify_slack_token, only: [:index]
-  respond_to :json
+  # respond_to :json
   
   def text_error_handler(error)
     Rails.logger.info("Slack Command encountered error: #{error.class} -- #{error.message}")
@@ -19,6 +21,33 @@ class SlackController < ApplicationController
   def index
     if params["event"]["text"]
       @name = params["event"]["text"]
+      # require "pry"; binding.pry
+      return render json: {
+        "text": "Your name is #{@name}"
+        # "attachments": [
+        #   {
+        #     "text": "Choose one:",
+        #     "fallback": "You are unable to view this",
+        #     "callback_id": "name_confirmation",
+        #     "color": "#3AA3E3",
+        #     "attachment_type": "default",
+        #     "actions": [
+        #       {
+        #         "name": "yes",
+        #         "text": "My name is correct",
+        #         "type": "button",
+        #         "value": "yes name"
+        #       },
+        #       {
+        #         "name": "no",
+        #         "text": "My name is incorrect",
+        #         "type": "button",
+        #         "value": "no name"
+        #         }
+        #       ]
+        #     }
+        #   ]
+        }
       # confirm_name
     else
       # deny_name

@@ -1,22 +1,60 @@
 class SlackController < ApplicationController
+  protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
+
+  rescue_from Exception, with: :text_error_handler
   skip_before_action :verify_authenticity_token
-  respond_to :json
+  before_action :verify_slack_token, only: [:index]
+  # respond_to :json
+  
+  def text_error_handler(error)
+    Rails.logger.info("Slack Command encountered error: #{error.class} -- #{error.message}")
+    Rails.logger.info(error.backtrace.join("\n"))
+    render text: "Error: #{error.class} -- #{error.message}"
+  end
+
   
   # def create
   #   return render json: {}, status: 403 unless valid_slack_token?
   #   CommandWorker.perform_async(command_params.to_h)
   #   render json: { response_type: "ephemeral"}, status: :created
   # end
+  
   def index
-    # require "pry"; binding.pry
-    render json: params["challenge"]
-    # require "pry"; binding.pry
+  
     if params["event"]["text"]
-      @name = params["event"]["text"]
-      confirm_name
+      name = params["event"]["text"]
+      channel = params["event"]["channel"]
+      SlackClientService.new.confirm_name(name, channel) unless params["event"]["subtype"] == "bot_message"
+      head :ok 
+      # render json: {
+      #   "text": "Your name is "
+        # "attachments": [
+        #   {
+        #     "text": "Choose one:",
+        #     "fallback": "You are unable to view this",
+        #     "callback_id": "name_confirmation",
+        #     "color": "#3AA3E3",
+        #     "attachment_type": "default",
+        #     "actions": [
+        #       {
+        #         "name": "yes",
+        #         "text": "My name is correct",
+        #         "type": "button",
+        #         "value": "yes name"
+        #       },
+        #       {
+        #         "name": "no",
+        #         "text": "My name is incorrect",
+        #         "type": "button",
+        #         "value": "no name"
+        #         }
+        #       ]
+        #     }
+        #   ]
+        # }
+      # confirm_name
     else
       # deny_name
-    # Faraday.get("https://slack.com/api/im.history?token=xoxp-2329094327-38224112384-81444342805-605512a65b&channel=#{params["channel"]["id"]}")
     end
   end
   
@@ -70,6 +108,12 @@ class SlackController < ApplicationController
   
   def parse(response)
     JSON.parse(response.body, symbolize_names: true)
+  end
+  
+  def verify_slack_token
+    if params["challenge"] 
+      render json: params["challenge"]
+    end
   end
   
   def valid_slack_token?

@@ -9,7 +9,7 @@ class JobsService
     name = job_data[0]
     first = name.split(" ").first
     last = name.split(" ").last
-    slack_user = User.where(first_name: first, last_name: last)
+    slack_user = User.find_by(first_name: first, last_name: last)
     if slack_user.count == 0 
       nil
     else

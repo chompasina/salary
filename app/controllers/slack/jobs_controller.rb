@@ -2,7 +2,6 @@ class Slack::JobsController < ApplicationController
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
   
   def create
-    # require "pry"; binding.pry
     if params["payload"]
       # params["payload"].first.second.first["name"] == "add_a_job"
       if params["payload"].include?("add_a_job")

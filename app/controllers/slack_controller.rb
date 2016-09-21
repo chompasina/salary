@@ -19,11 +19,14 @@ class SlackController < ApplicationController
   # end
   
   def index
+  
     if params["event"]["text"]
-      @name = params["event"]["text"]
-      # require "pry"; binding.pry
-      return render json: {
-        "text": "Your name is #{@name}"
+      name = params["event"]["text"]
+      channel = params["event"]["channel"]
+      SlackClientService.new.confirm_name(name, channel) unless params["event"]["subtype"] == "bot_message"
+      head :ok 
+      # render json: {
+      #   "text": "Your name is "
         # "attachments": [
         #   {
         #     "text": "Choose one:",
@@ -47,7 +50,7 @@ class SlackController < ApplicationController
         #       ]
         #     }
         #   ]
-        }
+        # }
       # confirm_name
     else
       # deny_name

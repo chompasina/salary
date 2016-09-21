@@ -11,6 +11,7 @@ class SlackController < ApplicationController
     Rails.logger.info(error.backtrace.join("\n"))
     render text: "Error: #{error.class} -- #{error.message}"
   end
+
   
   # def create
   #   return render json: {}, status: 403 unless valid_slack_token?
@@ -113,7 +114,6 @@ class SlackController < ApplicationController
     if params["challenge"] 
       render json: params["challenge"]
     end
-    # require "pry"; binding.pry
   end
   
   def valid_slack_token?

@@ -66,6 +66,7 @@ class Slack::JobsController < ApplicationController
         ]
       }
     end
+
     # return
     # @user_data = JobsService.create_from_slack(command_params)
     # @job = Job.new(job_title: @user_data[:job_title], 

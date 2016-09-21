@@ -20,7 +20,6 @@ class SlackController < ApplicationController
   # end
   
   def index
-  
     if params["event"]["text"]
       name = params["event"]["text"]
       channel = params["event"]["channel"]

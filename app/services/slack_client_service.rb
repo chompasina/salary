@@ -19,6 +19,7 @@ class SlackClientService
   
   def confirm_name(name, channel)
     client2 = Slack::Client.new(token: ENV['bot_access_token'])
+    JobInfoHandler.new(name).check_user?
     response = client2.chat_postMessage(
                        channel: channel, 
                        text: "Hi #{name}! So, you want to add a job? What's your job title?"

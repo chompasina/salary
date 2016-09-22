@@ -13,11 +13,10 @@ class User::JobsController < User::BaseController
     @job = Job.find(params[:id])
   end
 
-
   def create
       @job = current_user.jobs.create(job_params)
     if @job.save
-      SlackClientService.new.post_job_info(@job.job_title, @job.salary)
+      SlackClientService.new(input, user).post_job_info(@job.job_title, @job.salary)
       flash[:notice] = "#{@job.job_title} was created!"
       redirect_to jobs_path
     else

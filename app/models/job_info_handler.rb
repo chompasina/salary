@@ -26,17 +26,5 @@ class JobInfoHandler
   def execute
     check_user?
     add_job
-    #call other methods in here
-    #call this method first, and it'll check everything
   end
-      
-  # def get_user_counter
-  #   if @user 
-  #     @user.input_counter
-  #   else
-  #     nil
-  #   end
-  # end
-    
-  
 end

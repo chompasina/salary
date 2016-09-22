@@ -24,20 +24,21 @@ class SlackClientService
     user_input = input["text"]
     channel = input["channel"]
     job_handler = JobInfoHandler.new(user_input)
+    user_handler = UserInfoHandler.new(user_input)
     client2 = Slack::Client.new(token: ENV['bot_access_token'])
-    if job_handler.check_user? == false
+    if user_handler.check_user? == false && user_handler.get_user_counter == nil
       response = client2.chat_postMessage(
                         channel: channel, 
                         text: "We weren't able to find your name in our list. Please try again or email Turing staff to look into this issue."
                         )
     end
-    if job_handler.check_user? && job_handler.get_user_counter == 0
+    if user_handler.check_user? && user_handler.get_user_counter == 0
       # if job_handler.get_user_counter == 0
         response = client2.chat_postMessage(
                        channel: channel, 
                        text: "Hi #{user_input}! So, you want to add a job? What's your job title?"
                        )
-        job_handler.incrementer
+        user_handler.incrementer
                          # JobInfoHandler::QUESTIONS[user_counter]
        # Rails.logger.debug(YAML.dump(response))                  
     elsif job_handler.get_user_counter == 1

@@ -8,16 +8,23 @@ class JobInfoHandler
     @job_data = {}
   end
   
+  def create_user
+    
+  end
+  
   def check_user?
     first = input.split.first
     last = input.split.last
     @user = User.find_by(first_name: first, last_name: last)      
-    @user.update_attributes(input_counter: 1) if @user 
+  end
+  
+  def incrementer
+    @user.increment!(:input_counter, by = 1) if @user 
   end
   
   def add_job_title
-    require "pry"; binding.pry
-    @job_data << input
+    # require "pry"; binding.pry
+    # @job_data << input
     @user.update_attributes(input_counter: 2) 
   end
   

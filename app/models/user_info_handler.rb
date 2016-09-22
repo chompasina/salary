@@ -1,5 +1,6 @@
 class UserInfoHandler
-  attr_reader :input
+  attr_reader :input,
+              :user
   
   def initialize(input)
     @input = input

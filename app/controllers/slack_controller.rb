@@ -4,7 +4,6 @@ class SlackController < ApplicationController
   rescue_from Exception, with: :text_error_handler
   skip_before_action :verify_authenticity_token
   before_action :verify_slack_token, only: [:index]
-  # respond_to :json
   
   def text_error_handler(error)
     Rails.logger.info("Slack Command encountered error: #{error.class} -- #{error.message}")
@@ -13,36 +12,11 @@ class SlackController < ApplicationController
   end
 
   
-  # def create
-  #   return render json: {}, status: 403 unless valid_slack_token?
-  #   CommandWorker.perform_async(command_params.to_h)
-  #   render json: { response_type: "ephemeral"}, status: :created
-  # end
-  
   def index
-   if params["slack"]["user"]
-    #   SlackClientService.new(params["event"]).add_job unless params["event"]["subtype"] == "bot_message"
-    # elsif params["event"]["text"]
-    # render json: {"text": "first if" }
-    if session[:user_id] == nil
-    #   # if params["event"]["bot_id"]
-    #   #   session[:input_count] = 0
-      # if params["slack"]["user"] 
-        require "pry"; binding.pry
-        self.find_user(params["event"]["text"])
-        SlackClientService.new(params["event"]).confirm_name unless params["event"]["subtype"] == "bot_message"
-      elsif params["event"]["bot_id"]
-        render json: {"text": "Just the bot"}
-      else
-        render json: {"text": "not sure"}
-      end
-    elsif session[:user_id] = @user.id
-      require "pry"; binding.pry
-      SlackClientService.new(params["event"]).add_job unless params["event"]["subtype"] == "bot_message"
-    else
-      require "pry"; binding.pry
-    end  
-    # end
+   if params["event"]["user"] && params["event"]["subtype"] != "bot_message"
+      find_user(params["event"]["text"], params["event"]["user"]) 
+      SlackClientService.new(params["event"], @user).confirm_name 
+    end
     head :ok 
   end
   
@@ -94,13 +68,13 @@ class SlackController < ApplicationController
   
   private 
   
-  def find_user(input)
-    # require "pry"; binding.pry
-    @user = User.find_by(first_name: input.split.first, last_name: input.first.split.last) 
-    response = @user #self.current_user
-    session[:user_id] = @user.id
-    Rails.logger.debug(YAML.dump(response)) 
-
+  def find_user(input, slack_user_id)
+    @user = User.find_by(first_name: input.split.first, last_name: input.split.last) 
+    if @user == nil
+      @user = User.find_by(slack_user_id: slack_user_id)
+    else
+      @user.update_attributes(slack_user_id: slack_user_id)
+    end
   end
   
   def parse(response)

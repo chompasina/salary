@@ -20,11 +20,12 @@ class SlackController < ApplicationController
   # end
   
   def index
-    if params["event"]["text"] 
-      # name = params["event"]["text"]
-      # channel = params["event"]["channel"]
+    # if params["event"]["text"]
+    #   SlackClientService.new(params["event"]).add_job unless params["event"]["subtype"] == "bot_message"
+    # elsif params["event"]["text"]
       SlackClientService.new(params["event"]).confirm_name unless params["event"]["subtype"] == "bot_message"
-      # SlackClientService.new.confirm_name(name, channel) unless params["event"]["subtype"] == "bot_message"
+    # else
+    # end  
       head :ok 
       # render json: {
       #   "text": "Your name is "
@@ -53,9 +54,9 @@ class SlackController < ApplicationController
         #   ]
         # }
       # confirm_name
-    else
+    # else
       # deny_name
-    end
+    # end
   end
   
   def confirm_name

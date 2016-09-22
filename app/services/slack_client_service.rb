@@ -19,16 +19,19 @@ class SlackClientService
     client.chat_postMessage(channel: "#practice-jobs", text: "A Turing alum just posted a new job as a #{title} making #{salary}.", icon_emoji: ":monkey_face:")
   end
   
+  
   def confirm_name
     name = input["text"]
     channel = input["channel"]
-
+    job_handler = JobInfoHandler.new(name)
     client2 = Slack::Client.new(token: ENV['bot_access_token'])
-    if JobInfoHandler.new(name).check_user?
+    if job_handler.check_user? 
+      user_counter = job_handler.get_user_counter
       response = client2.chat_postMessage(
                        channel: channel, 
                        text: "Hi #{name}! So, you want to add a job? What's your job title?"
                        )
+                       # JobInfoHandler::QUESTIONS[user_counter]
     else
       response = client2.chat_postMessage(
                        channel: channel, 

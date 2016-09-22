@@ -55,16 +55,6 @@ class SlackController < ApplicationController
     }
   end
   
-  # def handle 
-  #   require "pry"; binding.pry
-  # #   raw_response = Faraday.get("https://slack.com/api/rtm.start", params: {
-  # #     token: ENV['slack_token']
-  # #     })
-  # #   parsed_response = JSON.pretty_generate(JSON.parse(raw_response.body))
-  # #   puts parsed_response['url']
-  # end
-  
-  
   
   private 
   

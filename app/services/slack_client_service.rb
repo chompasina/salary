@@ -75,7 +75,7 @@ class SlackClientService
        channel: channel, 
        text: "Great, thanks for anonymously sharing your job data with us! Your data can now be used in the statistics to help current student, prospective students, and staff members make better decisions."
        )
-       user_handler.decrementer
+       user.decrement!(:input_counter, by = 6)
      else
     end
   end

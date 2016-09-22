@@ -22,6 +22,10 @@ class JobInfoHandler
     @user.increment!(:input_counter, by = 1) if @user 
   end
   
+  def decrementer
+    @user.update_attributes(input_counter: 0)
+  end
+  
   def add_job_title
     # require "pry"; binding.pry
     # @job_data << input

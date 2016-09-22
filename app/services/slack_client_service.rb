@@ -31,47 +31,53 @@ class SlackClientService
                         text: "We weren't able to find your name in our list. Please try again or email Turing staff to look into this issue."
                         )
     end
-    if job_handler.check_user?
-      if job_handler.get_user_counter == 1
+    if job_handler.check_user? && job_handler.get_user_counter == 0
+      # if job_handler.get_user_counter == 0
         response = client2.chat_postMessage(
                        channel: channel, 
                        text: "Hi #{user_input}! So, you want to add a job? What's your job title?"
                        )
+        job_handler.incrementer
                          # JobInfoHandler::QUESTIONS[user_counter]
        # Rails.logger.debug(YAML.dump(response))                  
+    elsif job_handler.get_user_counter == 1
+        #  job_handler.add_job_title
+       response = client2.chat_postMessage(
+       channel: channel, 
+       text: "Great! What company do you work for?"
+       )
+       job_handler.incrementer
      elsif job_handler.get_user_counter == 2
-         job_handler.add_job_title
-         response = client2.chat_postMessage(
-         channel: channel, 
-         text: "Great! What company do you work for?"
-         )
-       elsif job_handler.get_user_counter == 3
-         response = client2.chat_postMessage(
-         channel: channel, 
-         text: "And where is this fine company located?"
-         )
-       elsif job_handler.get_user_counter == 4
-         response = client2.chat_postMessage(
-         channel: channel, 
-         text: "What is your yearly salary in this job? (Again, this is all strictly confidential.)"
-         )
-       elsif job_handler.get_user_counter == 5
-         response = client2.chat_postMessage(
-         channel: channel, 
-         text: "Almost done. When did you start this job? If you're no longer at this job, you can provide your end date in the next question. Please enter dates like mm/dd/yyyy."
-         )
-       elsif job_handler.get_user_counter == 6
-         response = client2.chat_postMessage(
-         channel: channel, 
-         text: "Last question: if this is a previous job, when did you leave this job? mm/dd/yyyy" 
-         )
-       elsif job_handler.get_user_counter == 7
-         response = client2.chat_postMessage(
-         channel: channel, 
-         text: "Great, thanks for anonymously sharing your job data with us! Your data can now be used in the statistics to help current student, prospective students, and staff members make better decisions."
-         )
-       else
-      end
+       response = client2.chat_postMessage(
+       channel: channel, 
+       text: "And where is this fine company located?"
+       )
+       job_handler.incrementer
+     elsif job_handler.get_user_counter == 3
+       response = client2.chat_postMessage(
+       channel: channel, 
+       text: "What is your yearly salary in this job? (Again, this is all strictly confidential.)"
+       )
+       job_handler.incrementer
+     elsif job_handler.get_user_counter == 4
+       response = client2.chat_postMessage(
+       channel: channel, 
+       text: "Almost done. When did you start this job? If you're no longer at this job, you can provide your end date in the next question. Please enter dates like mm/dd/yyyy."
+       )
+       job_handler.incrementer
+     elsif job_handler.get_user_counter == 5
+       response = client2.chat_postMessage(
+       channel: channel, 
+       text: "Last question: if this is a previous job, when did you leave this job? mm/dd/yyyy" 
+       )
+       job_handler.incrementer
+     elsif job_handler.get_user_counter == 6
+       response = client2.chat_postMessage(
+       channel: channel, 
+       text: "Great, thanks for anonymously sharing your job data with us! Your data can now be used in the statistics to help current student, prospective students, and staff members make better decisions."
+       )
+       job_handler.decrementer
+     else
     end
   end
   

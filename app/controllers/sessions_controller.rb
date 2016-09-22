@@ -5,20 +5,20 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.find_or_create_by_from_auth_hash(auth_hash)
-    self.current_user = @user
-    redirect_to user_path(@user)
-    # ===========
-    # @user = User.find_by(username: params[:session][:username])
-    # if @user && @user.authenticate(params[:session][:password])
-    #   session[:user_id] = @user.id
-    #   flash[:notice] = "Logged In Successfully"
-    #   redirect_to user_path(@user) unless @user.admin?
-    #   redirect_to admin_user_path(@user) if @user.admin?
-    # else
-    #   flash.now[:error] = "Invalid login, try again"
-    #   render :new
-    # end
+    # @user = User.find_or_create_by_from_auth_hash(auth_hash)
+    # self.current_user = @user
+    # redirect_to user_path(@user)
+    # # ===========
+    @user = User.find_by(username: params[:session][:username])
+    if @user && @user.authenticate(params[:session][:password])
+      session[:user_id] = @user.id
+      flash[:notice] = "Logged In Successfully"
+      redirect_to user_path(@user) unless @user.admin?
+      redirect_to admin_user_path(@user) if @user.admin?
+    else
+      flash.now[:error] = "Invalid login, try again"
+      render :new
+    end
   end
   
   def find_slack_user

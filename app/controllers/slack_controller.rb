@@ -23,40 +23,17 @@ class SlackController < ApplicationController
     # if params["event"]["text"]
     #   SlackClientService.new(params["event"]).add_job unless params["event"]["subtype"] == "bot_message"
     # elsif params["event"]["text"]
+    if session[:user_id] == nil
+      input = params["event"]["text"]
+      @user = User.find_by(first_name: input.split.first, last_name: input.first.split.last) 
+      self.current_user = @user
+      session[:user_id] = @user.id
       SlackClientService.new(params["event"]).confirm_name unless params["event"]["subtype"] == "bot_message"
+    elsif session[:user_id] = @user.id
     # else
     # end  
       head :ok 
-      # render json: {
-      #   "text": "Your name is "
-        # "attachments": [
-        #   {
-        #     "text": "Choose one:",
-        #     "fallback": "You are unable to view this",
-        #     "callback_id": "name_confirmation",
-        #     "color": "#3AA3E3",
-        #     "attachment_type": "default",
-        #     "actions": [
-        #       {
-        #         "name": "yes",
-        #         "text": "My name is correct",
-        #         "type": "button",
-        #         "value": "yes name"
-        #       },
-        #       {
-        #         "name": "no",
-        #         "text": "My name is incorrect",
-        #         "type": "button",
-        #         "value": "no name"
-        #         }
-        #       ]
-        #     }
-        #   ]
-        # }
-      # confirm_name
-    # else
-      # deny_name
-    # end
+    end
   end
   
   def confirm_name

@@ -33,6 +33,8 @@ class Slack::JobsController < ApplicationController
       end
     # elsif JSON.parse(params["payload"]).first.second.first["name"] == "job_stats"
     else
+      channel = params["event"]["message"]["channel"]
+      session[:slack_channel_id] = channel
       return render json: {
         "text": "Would you like to view alumni job stats or add your job anonymously?",
         "attachments": [

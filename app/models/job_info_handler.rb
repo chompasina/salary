@@ -5,6 +5,7 @@ class JobInfoHandler
   
   def initialize(input) #takes in params["text"]
     @input = input
+    @job_data = {}
   end
   
   def check_user?
@@ -15,6 +16,8 @@ class JobInfoHandler
   end
   
   def add_job_title
+    require "pry"; binding.pry
+    @job_data << input
     @user.update_attributes(input_counter: 2) 
   end
   
@@ -26,7 +29,11 @@ class JobInfoHandler
   end
       
   def get_user_counter
-    @user.input_counter
+    if @user 
+      @user.input_counter
+    else
+      nil
+    end
   end
     
   

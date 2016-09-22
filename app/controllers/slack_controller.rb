@@ -20,20 +20,30 @@ class SlackController < ApplicationController
   # end
   
   def index
-    # if params["event"]["text"]
+   if params["slack"]["user"]
     #   SlackClientService.new(params["event"]).add_job unless params["event"]["subtype"] == "bot_message"
     # elsif params["event"]["text"]
+    # render json: {"text": "first if" }
     if session[:user_id] == nil
-      input = params["event"]["text"]
-      @user = User.find_by(first_name: input.split.first, last_name: input.first.split.last) 
-      self.current_user = @user
-      session[:user_id] = @user.id
-      SlackClientService.new(params["event"]).confirm_name unless params["event"]["subtype"] == "bot_message"
+    #   # if params["event"]["bot_id"]
+    #   #   session[:input_count] = 0
+      # if params["slack"]["user"] 
+        require "pry"; binding.pry
+        self.find_user(params["event"]["text"])
+        SlackClientService.new(params["event"]).confirm_name unless params["event"]["subtype"] == "bot_message"
+      elsif params["event"]["bot_id"]
+        render json: {"text": "Just the bot"}
+      else
+        render json: {"text": "not sure"}
+      end
     elsif session[:user_id] = @user.id
-    # else
-    # end  
-      head :ok 
-    end
+      require "pry"; binding.pry
+      SlackClientService.new(params["event"]).add_job unless params["event"]["subtype"] == "bot_message"
+    else
+      require "pry"; binding.pry
+    end  
+    # end
+    head :ok 
   end
   
   def confirm_name
@@ -83,6 +93,15 @@ class SlackController < ApplicationController
   
   
   private 
+  
+  def find_user(input)
+    # require "pry"; binding.pry
+    @user = User.find_by(first_name: input.split.first, last_name: input.first.split.last) 
+    response = @user #self.current_user
+    session[:user_id] = @user.id
+    Rails.logger.debug(YAML.dump(response)) 
+
+  end
   
   def parse(response)
     JSON.parse(response.body, symbolize_names: true)

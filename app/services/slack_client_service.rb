@@ -28,17 +28,19 @@ class SlackClientService
                         channel: channel, 
                         text: "We weren't able to find your name in our list. Please try again or email Turing staff to look into this issue."
                         )
+                        Rails.logger.debug(YAML.dump(response))                  
+
     end
-    if @user #&& @user.input_counter == 0
-      require "pry"; binding.require "pry"; binding.pry
+    if current_user #&& current_user.input_counter == 0
+      # require "pry"; binding.require "pry"; binding.pry
       # if job_handler.get_user_counter == 0
         response = client2.chat_postMessage(
                        channel: channel, 
-                       text: "Hi #{user_input.first}! So, you want to add a job? What's your job title?"
+                       text: "Hi #{current_user.name}! So, you want to add a job? What's your job title?"
                        )
         user_handler.incrementer
                          # JobInfoHandler::QUESTIONS[user_counter]
-       # Rails.logger.debug(YAML.dump(response))                  
+       Rails.logger.debug(YAML.dump(response))                  
     elsif @user.input_counter == 1
         #  job_handler.add_job_title
        response = client2.chat_postMessage(

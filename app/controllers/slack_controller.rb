@@ -20,42 +20,30 @@ class SlackController < ApplicationController
   # end
   
   def index
-  
-    if params["event"]["text"]
-      name = params["event"]["text"]
-      channel = params["event"]["channel"]
-      SlackClientService.new.confirm_name(name, channel) unless params["event"]["subtype"] == "bot_message"
-      head :ok 
-      # render json: {
-      #   "text": "Your name is "
-        # "attachments": [
-        #   {
-        #     "text": "Choose one:",
-        #     "fallback": "You are unable to view this",
-        #     "callback_id": "name_confirmation",
-        #     "color": "#3AA3E3",
-        #     "attachment_type": "default",
-        #     "actions": [
-        #       {
-        #         "name": "yes",
-        #         "text": "My name is correct",
-        #         "type": "button",
-        #         "value": "yes name"
-        #       },
-        #       {
-        #         "name": "no",
-        #         "text": "My name is incorrect",
-        #         "type": "button",
-        #         "value": "no name"
-        #         }
-        #       ]
-        #     }
-        #   ]
-        # }
-      # confirm_name
+   if params["slack"]["user"]
+    #   SlackClientService.new(params["event"]).add_job unless params["event"]["subtype"] == "bot_message"
+    # elsif params["event"]["text"]
+    # render json: {"text": "first if" }
+    if session[:user_id] == nil
+    #   # if params["event"]["bot_id"]
+    #   #   session[:input_count] = 0
+      # if params["slack"]["user"] 
+        require "pry"; binding.pry
+        self.find_user(params["event"]["text"])
+        SlackClientService.new(params["event"]).confirm_name unless params["event"]["subtype"] == "bot_message"
+      elsif params["event"]["bot_id"]
+        render json: {"text": "Just the bot"}
+      else
+        render json: {"text": "not sure"}
+      end
+    elsif session[:user_id] = @user.id
+      require "pry"; binding.pry
+      SlackClientService.new(params["event"]).add_job unless params["event"]["subtype"] == "bot_message"
     else
-      # deny_name
-    end
+      require "pry"; binding.pry
+    end  
+    # end
+    head :ok 
   end
   
   def confirm_name
@@ -105,6 +93,15 @@ class SlackController < ApplicationController
   
   
   private 
+  
+  def find_user(input)
+    # require "pry"; binding.pry
+    @user = User.find_by(first_name: input.split.first, last_name: input.first.split.last) 
+    response = @user #self.current_user
+    session[:user_id] = @user.id
+    Rails.logger.debug(YAML.dump(response)) 
+
+  end
   
   def parse(response)
     JSON.parse(response.body, symbolize_names: true)

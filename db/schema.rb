@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918235326) do
+ActiveRecord::Schema.define(version: 20160921221616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20160918235326) do
     t.citext  "first_name"
     t.citext  "last_name"
     t.integer "cohort"
+    t.integer "input_counter",   default: 0
   end
 
   add_foreign_key "jobs", "users"
